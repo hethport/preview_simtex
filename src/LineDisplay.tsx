@@ -1,7 +1,6 @@
-import {XmlNode} from 'simple_xml';
+import {writeNode, XmlNode} from 'simple_xml';
 import {Line} from 'simtex/dist/model/Line';
 import {NodeDisplay} from './NodeDisplay';
-import {writeNode} from 'simple_xml';
 
 interface IProps {
   line: Line;
