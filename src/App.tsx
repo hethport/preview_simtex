@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {TLHParser} from 'simtex';
+import {useState} from "react";
+import {TLHParserDisplay} from './TLHParserDisplay';
 
-function App() {
+export function App(): JSX.Element {
+
+  const [state, setState] = useState<TLHParser | undefined>();
+
+  const onTransliterationChange = (value: string): void => {
+    const parser: TLHParser = new TLHParser(value);
+
+    setState(parser);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container mx-auto">
+      <h1 className="my-4 font-bold text-2xl text-center">SimTex Preview</h1>
+
+      <div className="grid grid-cols-2 gap-2">
+        <div>
+          <h2 className="font-bold text-xl text-center">Transliteration</h2>
+
+          <textarea cols={60} rows={40} className="p-2 rounded border border-slate-500 w-full"
+                    onChange={(event) => onTransliterationChange(event.target.value)}/>
+        </div>
+        <div>
+          <h2 className="font-bold text-xl text-center">Resultat</h2>
+
+          {state
+            ? <TLHParserDisplay parser={state}/>
+            : <div className="text-center italic">Noch kein Resultat...</div>}
+        </div>
+      </div>
+
     </div>
   );
 }
-
-export default App;
